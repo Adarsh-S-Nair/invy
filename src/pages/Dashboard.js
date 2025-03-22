@@ -15,10 +15,12 @@ export default function Dashboard() {
     <div className="dashboard-empty">
       <img src="/images/get-started.svg" alt="Get started" />
       <p className="subtle-text">You haven’t set up your business yet. Let’s get started.</p>
-      <button onClick={() => setShowModal(true)}>Create Business</button>
+      <button className="btn btn-primary" onClick={() => setShowModal(true)}>
+        Create Business
+      </button>
 
       <Modal
-        title="Create a New Business"
+        title="Create a new business"
         isOpen={showModal}
         onClose={() => setShowModal(false)}
       >

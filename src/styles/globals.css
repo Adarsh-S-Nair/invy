@@ -42,3 +42,40 @@ input:focus {
     margin-bottom: 10px;
     text-align: left;
   }
+
+
+  /* Base Button Style */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    text-decoration: none;
+  }
+  
+  /* Primary Button */
+  .btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+  }
+  
+  .btn-primary:hover {
+    background-color: var(--color-primary-hover, #2563eb);
+  }
+  
+  /* Muted/Secondary Button */
+  .btn-muted {
+    background-color: var(--color-muted);
+    color: var(--color-text);
+  }
+  
+  .btn-muted:hover {
+    background-color: var(--color-muted-hover);
+  }
+  

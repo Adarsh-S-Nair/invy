@@ -18,10 +18,11 @@ export default function CreateBusinessForm({ onCreate, onCancel }) {
         onChange={(e) => setName(e.target.value)}
       />
       <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
-        <button onClick={onCancel} style={{ background: 'var(--color-muted)' }}>
+        <button className="btn btn-muted" onClick={onCancel}>
           Cancel
         </button>
-        <button onClick={handleSubmit} style={{ background: 'var(--color-primary)', color: 'white' }}>
+
+        <button className="btn btn-primary" onClick={handleSubmit}>
           Create
         </button>
       </div>

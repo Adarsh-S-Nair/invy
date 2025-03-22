@@ -8,16 +8,19 @@
     --color-shadow: rgba(0, 0, 0, 0.05);
     --color-error: #e53935;
     --color-disabled: #cccccc;
+    --color-primary-hover: #2563eb;
   }
   
   [data-theme="dark"] {
     --color-bg: #232323;         /* true grayish dark */
     --color-text: #bcbcbc;
     --color-primary: #4d8ef7;
-    --color-card: #282828;
+    --color-card: #1d1d1d;
     --color-muted: #303030;
     --color-shadow: rgba(0, 0, 0, 0.2);
     --color-error: #ef5350;
     --color-disabled: #3f3f3f;
+    --color-primary-hover: rgb(64, 99, 213);
+    --color-muted-hover: #2a2a2a;
   }
   

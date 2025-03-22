@@ -10,7 +10,7 @@
     padding: 0 20px;
     box-sizing: border-box;
   }
-  
+
   .dashboard-empty img {
     max-width: 280px;
     margin-bottom: 28px;
@@ -26,7 +26,6 @@
   
   .dashboard-empty button {
     padding: 10px 24px;
-    background-color: var(--color-primary);
     color: white;
     border: none;
     border-radius: 8px;
