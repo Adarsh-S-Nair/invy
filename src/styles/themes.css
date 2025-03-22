@@ -1,0 +1,21 @@
+/* src/styles/themes.css */
+:root {
+    --color-bg: #e8ebf0;         /* softer off-white */
+    --color-text: #1e1e1e;
+    --color-primary: #4d8ef7;    /* modern light blue */
+    --color-card: #ffffff;
+    --color-muted: #f0f2f5;
+    --color-shadow: rgba(0, 0, 0, 0.05);
+    --color-error: #e53935;
+  }
+  
+  [data-theme="dark"] {
+    --color-bg: #2c2c2c;         /* true grayish dark */
+    --color-text: #f2f2f2;
+    --color-primary: #4d8ef7;
+    --color-card: #373737;
+    --color-muted: #444;
+    --color-shadow: rgba(0, 0, 0, 0.2);
+    --color-error: #ef5350;
+  }
+  
