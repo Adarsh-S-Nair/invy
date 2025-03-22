@@ -1,12 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import LoginPage from './pages/Login'
 import Dashboard from './pages/Dashboard'
+import MainLayout from './layout/MainLayout'
 import './styles/themes.css'
 import './styles/globals.css'
 import { useEffect, useState } from 'react'
 
 function App() {
-  const [theme, setTheme] = useState('dark')
+  const [theme, setTheme] = useState('light')
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
@@ -20,7 +21,10 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<LoginPage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route element={<MainLayout />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          {/* future: <Route path="/inventory" ... /> */}
+        </Route>
       </Routes>
     </Router>
   )
