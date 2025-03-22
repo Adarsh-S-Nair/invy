@@ -70,7 +70,7 @@ export default function AuthForm({ isLogin, setIsLogin }) {
   return (
     <div className="auth-form">
       <form className="form-box" onSubmit={handleAuth}>
-        <h2>{isLogin ? 'Login' : 'Sign Up'}</h2>
+        <h2>{isLogin ? 'Login' : 'Create an Account'}</h2>
         <input
           type="email"
           placeholder="Email Address"
