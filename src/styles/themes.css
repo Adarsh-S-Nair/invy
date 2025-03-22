@@ -7,6 +7,7 @@
     --color-muted: #f0f2f5;
     --color-shadow: rgba(0, 0, 0, 0.05);
     --color-error: #e53935;
+    --color-disabled: #cccccc;
   }
   
   [data-theme="dark"] {
@@ -17,5 +18,6 @@
     --color-muted: #444;
     --color-shadow: rgba(0, 0, 0, 0.2);
     --color-error: #ef5350;
+    --color-disabled: #555555;
   }
   

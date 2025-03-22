@@ -6,7 +6,7 @@ import './styles/globals.css'
 import { useEffect, useState } from 'react'
 
 function App() {
-  const [theme, setTheme] = useState('light')
+  const [theme, setTheme] = useState('dark')
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
