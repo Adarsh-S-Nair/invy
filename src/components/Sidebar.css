@@ -9,7 +9,7 @@
     transition: width 0.25s ease;
     display: flex;
     flex-direction: column;
-    z-index: 1000;
+    z-index: 10;
     overflow: hidden;
   }
   
@@ -86,7 +86,7 @@
     white-space: nowrap;
     font-size: 0.85rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-    z-index: 9999;
+    z-index: 20;
     pointer-events: none;
     opacity: 1;
   }
