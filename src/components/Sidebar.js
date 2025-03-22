@@ -1,15 +1,10 @@
 import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { supabase } from '../supabaseClient'
-import {
-  FiUser,
-  FiMenu,
-  FiHome,
-  FiGrid,
-  FiPackage,
-  FiSettings,
-  FiLogOut,
-} from 'react-icons/fi'
+import { FaUser } from "react-icons/fa"
+import { TiThMenu } from "react-icons/ti"
+import { TbLayoutDashboardFilled } from "react-icons/tb"
+import { MdBusinessCenter, MdInventory, MdSettings, MdLogout } from "react-icons/md"
 import './Sidebar.css'
 
 export default function Sidebar() {
@@ -18,10 +13,10 @@ export default function Sidebar() {
   const location = useLocation()
 
   const navItems = [
-    { icon: <FiHome size={20} />, label: 'Dashboard', path: '/dashboard' },
-    { icon: <FiGrid size={20} />, label: 'Business', path: '/business' },
-    { icon: <FiPackage size={20} />, label: 'Inventory', path: '/inventory' },
-    { icon: <FiSettings size={20} />, label: 'Settings', path: '/settings' },
+    { icon: <TbLayoutDashboardFilled size={20} />, label: 'Dashboard', path: '/dashboard' },
+    { icon: <MdBusinessCenter size={20} />, label: 'Business', path: '/business' },
+    { icon: <MdInventory size={20} />, label: 'Inventory', path: '/inventory' },
+    { icon: <MdSettings size={20} />, label: 'Settings', path: '/settings' },
   ]
 
   const handleLogout = async () => {
@@ -35,12 +30,12 @@ export default function Sidebar() {
       {isOpen && (
         <div className="sidebar-user">
             <div className="user-avatar">
-            <FiUser size={20} />
+            <FaUser size={20} />
             </div>
         </div>
         )}
         <button className="toggle-btn" onClick={() => setIsOpen(!isOpen)}>
-            <FiMenu size={20} />
+            <TiThMenu size={20} />
         </button>
       </div>
 
@@ -61,7 +56,7 @@ export default function Sidebar() {
 
       <div className="sidebar-footer">
         <div className="sidebar-link logout" onClick={handleLogout}>
-          <FiLogOut size={20} />
+          <MdLogout size={20} />
           {isOpen && <span>Log Out</span>}
         </div>
       </div>

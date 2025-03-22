@@ -86,7 +86,7 @@
   
   .form-box button.disabled {
     background-color: var(--color-disabled);
-    color: white;
+    color: var( --color-text);
     cursor: default;
     box-shadow: none;
   }

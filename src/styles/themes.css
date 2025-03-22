@@ -1,7 +1,7 @@
 /* src/styles/themes.css */
 :root {
-    --color-bg: #e8ebf0;         /* softer off-white */
-    --color-text: #1e1e1e;
+    --color-bg: #f6f8fa;         /* softer off-white */
+    --color-text: #4d4d4d;
     --color-primary: #4d8ef7;    /* modern light blue */
     --color-card: #ffffff;
     --color-muted: #f0f2f5;
@@ -11,13 +11,13 @@
   }
   
   [data-theme="dark"] {
-    --color-bg: #2c2c2c;         /* true grayish dark */
-    --color-text: #f2f2f2;
+    --color-bg: #232323;         /* true grayish dark */
+    --color-text: #bcbcbc;
     --color-primary: #4d8ef7;
-    --color-card: #373737;
-    --color-muted: #444;
+    --color-card: #282828;
+    --color-muted: #303030;
     --color-shadow: rgba(0, 0, 0, 0.2);
     --color-error: #ef5350;
-    --color-disabled: #555555;
+    --color-disabled: #3f3f3f;
   }
   
