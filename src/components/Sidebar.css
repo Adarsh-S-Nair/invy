@@ -11,11 +11,12 @@
     flex-direction: column;
     z-index: 10;
     overflow: hidden;
+    box-shadow: 8px 0 30px rgba(0, 0, 0, 0.12);
   }
   
   .sidebar.open {
     width: 220px;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.08);
+    box-shadow: 8px 0 30px rgba(0, 0, 0, 0.12);
   }
   
   .sidebar-header {

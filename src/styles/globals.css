@@ -79,3 +79,6 @@ input:focus {
     background-color: var(--color-muted-hover);
   }
   
+  .page-header {
+    font-size: 24px;
+  }

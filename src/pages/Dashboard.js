@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../supabaseClient'
 import Modal from '../components/Modal'
+import DashboardCard from '../components/DashboardCard'
 import CreateBusinessForm from '../components/CreateBusinessForm'
 import './Dashboard.css'
+import { FaDollarSign, FaMoneyBillWave, FaChartLine, FaReceipt } from 'react-icons/fa'
 
 export default function Dashboard() {
   const [showModal, setShowModal] = useState(false)
@@ -20,15 +22,10 @@ export default function Dashboard() {
 
       if (userError || !user) return
 
-      console.log(`User ID: ${user.id}`)
-
-      const { data, error } = await supabase
-        .from('businesses')
-        .select('*')
-        .eq('owner_id', user.id)
-        .maybeSingle()
+      const { data, error } = await supabase.from('businesses').select('*').eq('owner_id', user.id).maybeSingle()
 
       if (!error && data) {
+        console.log('Business:', data)
         setBusiness(data)
       }
 
@@ -77,10 +74,57 @@ export default function Dashboard() {
 
   // 🎯 Placeholder dashboard view for users with a business
   return (
-    <div className="dashboard-main">
-      <h2>Welcome back 👋</h2>
-      <p>Your business: <strong>{business.name}</strong></p>
-      {/* You can replace this later with real dashboard widgets */}
+    <div className="dashboard">
+      <div className="page-header">
+        Dashboard
+      </div>
+
+      <div className="dashboard-content">
+        <div className="dashboard-grid">
+          {/* Row 1 - 4 Cards, each 3 wide (12 total), 1 tall */}
+          <DashboardCard width={3} height={1}>
+            <h3>Gross Revenue</h3>
+            <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>$12,340</p>
+          </DashboardCard>
+
+          <DashboardCard width={3} height={1}>
+            <h3>Income</h3>
+            <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>$8,220</p>
+          </DashboardCard>
+
+          <DashboardCard width={3} height={1}>
+            <h3>Expenses</h3>
+            <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>$4,120</p>
+          </DashboardCard>
+
+          <DashboardCard width={3} height={1}>
+            <h3>Transactions</h3>
+            <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>354</p>
+          </DashboardCard>
+
+          {/* Row 2 - 2 Cards, each 6 wide, 2 tall */}
+          <DashboardCard width={8} height={2}>
+            <h3>Income vs Expenses</h3>
+            <p>[Bar chart here]</p>
+          </DashboardCard>
+
+          <DashboardCard width={4} height={2}>
+            <h3>Stock Alerts</h3>
+            <p>[Low stock items table]</p>
+          </DashboardCard>
+
+          {/* Row 3 - 2 Cards, each 6 wide, 2 tall */}
+          <DashboardCard width={4} height={2}>
+            <h3>Top Selling Items</h3>
+            <p>[Table here]</p>
+          </DashboardCard>
+
+          <DashboardCard width={8} height={2}>
+            <h3>Recent Transactions</h3>
+            <p>[Transactions table]</p>
+          </DashboardCard>
+        </div>
+      </div>
     </div>
   )
 }

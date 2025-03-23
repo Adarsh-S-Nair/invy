@@ -1,0 +1,22 @@
+.dashboard-card {
+    background-color: var(--color-card); /* outer shell */
+    border-radius: 12px;
+    padding: 12px; /* space for the inner border illusion */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .card-inner {
+    background-color: var(--color-inner-card); /* lighter than outer */
+    border-radius: 10px;
+    padding: 10px;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
