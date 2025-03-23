@@ -38,6 +38,14 @@
   gap: 16px;
 }
 
+.modal-error {
+  color: var(--color-error, #e11d48); /* tailwind's red-600 by default */
+  font-size: 0.85rem;
+  margin: 0;
+  margin-left: 4px;
+  text-align: left;
+}
+
 /* ✅ Animations */
 @keyframes fadeIn {
   from { opacity: 0; }
