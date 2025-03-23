@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { supabase } from '../supabaseClient'
 import { FaUser } from "react-icons/fa"
@@ -9,6 +9,7 @@ import './Sidebar.css'
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false)
+  const sidebarRef = useRef(null)
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -24,8 +25,25 @@ export default function Sidebar() {
     navigate('/')
   }
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target) &&
+        isOpen
+      ) {
+        setIsOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isOpen])
+
   return (
-    <div className={`sidebar ${isOpen ? 'open' : ''}`}>
+    <div ref={sidebarRef} className={`sidebar ${isOpen ? 'open' : ''}`}>
       <div className="sidebar-header">
       {isOpen && (
         <div className="sidebar-user">

@@ -11,6 +11,10 @@
     --color-disabled: #cccccc;
     --color-primary-hover: #2563eb;
     --color-muted-hover: #e8eaed;
+    --color-positive-bg: #dcfce7;
+    --color-positive-text: #15803d;
+    --color-negative-bg: #fee2e2;
+    --color-negative-text: #b91c1c;
   }
   
   [data-theme="dark"] {
@@ -25,5 +29,9 @@
     --color-disabled: #3f3f3f;
     --color-primary-hover: rgb(64, 99, 213);
     --color-muted-hover: #2a2a2a;
+    --color-positive-bg: #23523e;
+    --color-positive-text: #75b178;
+    --color-negative-bg: #4e2121;
+    --color-negative-text: #db6161;
   }
   

@@ -82,46 +82,58 @@ export default function Dashboard() {
       <div className="dashboard-content">
         <div className="dashboard-grid">
           {/* Row 1 - 4 Cards, each 3 wide (12 total), 1 tall */}
-          <DashboardCard width={3} height={1}>
-            <h3>Gross Revenue</h3>
-            <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>$12,340</p>
-          </DashboardCard>
+          <DashboardCard
+            title="Gross Revenue"
+            value="$12,340"
+            change={12.4}
+            width={3}
+            height={1}
+            trend={[4, 6, 3, 7, 5, 8, 4, 9, 7, 10]}
+          />
 
-          <DashboardCard width={3} height={1}>
-            <h3>Income</h3>
-            <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>$8,220</p>
-          </DashboardCard>
+          <DashboardCard
+            title="Income"
+            value="$8,220"
+            change={6.1}
+            width={3}
+            height={1}
+            trend={[3, 5, 4, 6, 5, 7, 6, 8, 7, 9]}
+          />
 
-          <DashboardCard width={3} height={1}>
-            <h3>Expenses</h3>
-            <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>$4,120</p>
-          </DashboardCard>
+          <DashboardCard
+            title="Expenses"
+            value="$4,120"
+            change={-5.2}
+            width={3}
+            height={1}
+            trend={[6, 7, 6, 5, 7, 6, 5, 4, 5, 4]} // ↘️ trend
+          />
 
-          <DashboardCard width={3} height={1}>
-            <h3>Transactions</h3>
-            <p style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>354</p>
-          </DashboardCard>
+          <DashboardCard
+            title="Transactions"
+            value="354"
+            change={1.9}
+            width={3}
+            height={1}
+            trend={[120, 130, 140, 110, 150, 160, 145, 170, 165, 180]}
+          />
 
           {/* Row 2 - 2 Cards, each 6 wide, 2 tall */}
           <DashboardCard width={8} height={2}>
             <h3>Income vs Expenses</h3>
-            <p>[Bar chart here]</p>
           </DashboardCard>
 
           <DashboardCard width={4} height={2}>
             <h3>Stock Alerts</h3>
-            <p>[Low stock items table]</p>
           </DashboardCard>
 
           {/* Row 3 - 2 Cards, each 6 wide, 2 tall */}
           <DashboardCard width={4} height={2}>
             <h3>Top Selling Items</h3>
-            <p>[Table here]</p>
           </DashboardCard>
 
           <DashboardCard width={8} height={2}>
             <h3>Recent Transactions</h3>
-            <p>[Transactions table]</p>
           </DashboardCard>
         </div>
       </div>
