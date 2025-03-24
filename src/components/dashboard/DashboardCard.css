@@ -24,25 +24,12 @@
   margin: 0px;
 }
 
-.card-inner p {
-  margin: 0px;
-  font-size: 48px;
-  font-weight: bold;
-}
-
 .kpi-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 0.95rem;
   font-weight: 500;
-  color: var(--color-text);
-}
-
-.kpi-value {
-  font-size: 1.6rem;
-  font-weight: bold;
-  margin: auto 0 0 0;
   color: var(--color-text);
 }
 
@@ -72,7 +59,7 @@
 }
 
 .kpi-value {
-  font-size: 1.8rem;
+  font-size: 2.8rem;
   font-weight: bold;
   color: var(--color-text);
   margin: 0;

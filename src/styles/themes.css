@@ -15,6 +15,8 @@
     --color-positive-text: #15803d;
     --color-negative-bg: #fee2e2;
     --color-negative-text: #b91c1c;
+    --color-warning-bg: #fff3cd;
+    --color-warning-text: #856404;
   }
   
   [data-theme="dark"] {
@@ -24,7 +26,7 @@
     --color-card: #1d1d1d;
     --color-inner-card: #212121;
     --color-muted: #303030;
-    --color-shadow: rgba(0, 0, 0, 0.2);
+    --color-shadow: rgba(0, 0, 0, 0.5);
     --color-error: #ef5350;
     --color-disabled: #3f3f3f;
     --color-primary-hover: rgb(64, 99, 213);
@@ -33,5 +35,7 @@
     --color-positive-text: #75b178;
     --color-negative-bg: #4e2121;
     --color-negative-text: #db6161;
+    --color-warning-bg: #5c5137;
+    --color-warning-text: #b5a072;
   }
   

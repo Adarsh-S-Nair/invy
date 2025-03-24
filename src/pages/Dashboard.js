@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../supabaseClient'
 import Modal from '../components/Modal'
-import DashboardCard from '../components/DashboardCard'
+import DashboardCard from '../components/dashboard/DashboardCard'
 import CreateBusinessForm from '../components/CreateBusinessForm'
 import './Dashboard.css'
 import { FaDollarSign, FaMoneyBillWave, FaChartLine, FaReceipt } from 'react-icons/fa'
