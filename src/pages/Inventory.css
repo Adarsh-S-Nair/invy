@@ -68,11 +68,17 @@
 }
 
 .status-tag {
-  padding: 4px 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;                 /* 👈 LOCKED width */
+  height: 24px;                 /* Consistent height */
+  padding: 0 12px;              /* Still keeps text comfy */
   border-radius: 999px;
   font-size: 0.75rem;
   font-weight: 600;
-  text-transform: capitalize;
+  white-space: nowrap;
+  line-height: 1;
 }
 
 .status-tag.in-stock {

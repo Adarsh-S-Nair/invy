@@ -1,7 +1,7 @@
 .context-menu {
     position: absolute;
     top: 8px;
-    left: -140px; /* 👈 shift alignment to start at the button */
+    left: -120px; /* 👈 shift alignment to start at the button */
     background-color: var(--color-muted);
     border: 1px solid var(--color-border);
     border-radius: 8px;
