@@ -19,28 +19,63 @@
 .custom-table thead {
   position: sticky;
   top: 0;
-  background-color: var(--color-muted);
+  background-color: var(--color-bg);
   z-index: 2;
 }
 
-.custom-table th,
-.custom-table td {
+.custom-table td,
+.custom-table th {
   text-align: center;
   padding: 12px 16px;
   border-bottom: 1px solid var(--color-border);
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.4;
+  height: 50px; /* 👈 force consistent height */
+  position: relative;
+}
+
+.placeholder-row td {
+  background-color: transparent;
+  pointer-events: none;
+  opacity: 0.4;
+  height: 50px; /* 👈 match exactly */
 }
 
 .custom-table tbody tr:nth-child(even) {
   background-color: var(--color-card);
 }
 
+/* Ensure .no-hover keeps zebra color even on hover */
+.custom-table tbody tr.no-hover:nth-child(even):hover {
+  background-color: var(--color-card) !important;
+  cursor: default !important;
+}
+
+
 .custom-table tbody tr:hover {
-  background-color: var(--color-muted);
+  background-color: var(--color-muted-hover);
+}
+
+/* Remove hover styles from rows when context menu is open */
+.no-hover:hover {
+  background-color: inherit !important;
+  cursor: default !important;
+}
+
+/* Preserve hover style visually on the active row */
+.active-row {
+  background-color: var(--color-muted-hover) !important;
+}
+
+/* Optional: keep pointer */
+.active-row:hover {
+  cursor: pointer;
 }
 
 /* ✅ Footer stays at bottom of table */
 .table-footer {
-  background-color: var(--color-muted); /* 👈 matches header now */
+  background-color: var(--color-bg); /* 👈 matches header now */
   padding: 12px 16px;
   display: flex;
   justify-content: flex-end;
@@ -58,7 +93,7 @@
   border-radius: 6px;
   font-size: 0.8rem;
   font-weight: 600;
-  background-color: var(--color-muted);
+  background-color: var(--color-bg);
   color: var(--color-text);
   border: none;
   cursor: pointer;
@@ -78,4 +113,33 @@
   font-size: 0.8rem;
   font-weight: 500;
   color: var(--color-text-muted);
+}
+
+.cell-with-icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-icon-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1; /* 👈 Lower priority than menu */
+}
+
+.context-menu-anchor {
+  position: absolute;
+  top: 28px;
+  right: 0;
+  z-index: 9999; /* 👈 Full priority menu */
 }

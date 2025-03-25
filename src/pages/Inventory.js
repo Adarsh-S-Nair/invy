@@ -2,6 +2,8 @@ import { useState } from 'react'
 import './Inventory.css'
 import emptyBox from '../assets/empty-box.svg'
 import Table from '../components/Table'
+import ContextMenu from '../components/ContextMenu'
+import { FiMoreVertical } from 'react-icons/fi'
 
 const generateFakeItems = () => {
   const names = ['Pepsi', 'Snickers', 'Doritos', 'Red Bull', 'KitKat', 'Monster', 'Twix', 'Skittles']
@@ -39,6 +41,15 @@ const generateFakeItems = () => {
 export default function Inventory() {
   // const [rowData] = useState([])
   const [rowData] = useState(generateFakeItems())
+  const [openMenuIndex, setOpenMenuIndex] = useState(null)
+
+  const handleEdit = (row) => {
+    console.log('Edit', row)
+  }
+
+  const handleDelete = (row) => {
+    console.log('Delete', row)
+  }
 
   const columns = [
     { header: 'Name', accessorKey: 'name' },
@@ -49,33 +60,63 @@ export default function Inventory() {
     {
       header: 'Status',
       accessorKey: 'status',
-      cell: info => (
-        <span className={`status-tag ${info.getValue().toLowerCase().replace(/\s/g, '-')}`}>
-          {info.getValue()}
-        </span>
-      ),
-    },
-    {
-      header: 'Actions',
-      cell: () => <button className="edit-btn">Edit</button>,
-    },
+      cell: info => {
+        const value = info.getValue()
+        const rowIndex = info.row.index
+        const rowData = info.row.original
+      
+        return (
+          <div className="cell-with-icon-wrapper">
+            <span className={`status-tag ${value.toLowerCase().replace(/\s/g, '-')}`}>
+              {value}
+            </span>
+      
+            <button
+              className="action-icon-btn"
+              onClick={() => setOpenMenuIndex(openMenuIndex === rowIndex ? null : rowIndex)}
+            >
+              <FiMoreVertical size={20} />
+            </button>
+      
+            {openMenuIndex === rowIndex && (
+              <div className="context-menu-anchor">
+                <ContextMenu
+                  items={[
+                    { label: 'Edit', onClick: () => handleEdit(rowData) },
+                    { label: 'Delete', onClick: () => handleDelete(rowData) },
+                  ]}
+                  onClose={() => setOpenMenuIndex(null)}
+                />
+              </div>
+            )}
+          </div>
+        )
+      }
+    }
   ]
 
   return (
     <div className="inventory-page">
       <div className="page-header">Inventory</div>
 
-      <div className="inventory-card">
-        <div className="inventory-inner-card">
-          {rowData.length === 0 ? (
-            <div className="empty-state">
-              <img src={emptyBox} alt="No items" />
-              <p>No items found in your inventory</p>
-              <button className="primary-btn">Add Item</button>
-            </div>
-          ) : (
-            <Table columns={columns} data={rowData} />
-          )}
+      <div className="inventory-content">
+        <div className="inventory-card">
+          <div className="inventory-inner-card">
+            {rowData.length === 0 ? (
+              <div className="empty-state">
+                <img src={emptyBox} alt="No items" />
+                <p>No items found in your inventory</p>
+                <button className="primary-btn">Add Item</button>
+              </div>
+            ) : (
+              <Table
+                data={rowData}
+                columns={columns}
+                pageSize={15}
+                openMenuIndex={openMenuIndex}
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>

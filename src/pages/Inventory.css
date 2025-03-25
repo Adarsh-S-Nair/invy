@@ -1,12 +1,21 @@
 .inventory-page {
+  display: flex;
+  flex-direction: column;
   padding: 40px;
-  height: 100%;
+  height: 100vh; /* Full height viewport */
 }
 
 .page-header {
   font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 24px;
+}
+
+.inventory-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .inventory-card {
@@ -16,6 +25,8 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 1200px; /* or whatever fits your layout */
 }
 
 .inventory-inner-card {
@@ -79,12 +90,26 @@
   color: var(--color-negative-text);
 }
 
-.edit-btn {
-  font-size: 0.75rem;
-  padding: 6px 12px;
-  border-radius: 6px;
+.action-icon-btn {
+  background: none;
   border: none;
   cursor: pointer;
-  background-color: var(--color-muted);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--color-text);
+  transition: opacity 0.2s ease;
+  z-index: 5;
+}
+
+.action-icon-btn:hover {
+  opacity: 0.6;
+}
+
+.action-icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }

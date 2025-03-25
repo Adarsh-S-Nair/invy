@@ -7,7 +7,7 @@ import {
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import './Table.css'
 
-export default function Table({ columns, data, pageSize = 15 }) {
+export default function Table({ columns, data, openMenuIndex, pageSize = 15 }) {
   const table = useReactTable({
     data,
     columns,
@@ -36,19 +36,38 @@ export default function Table({ columns, data, pageSize = 15 }) {
             </tr>
           ))}
         </thead>
-
         <tbody>
-          {table.getRowModel().rows.map(row => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map(cell => (
-                <td key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+        {table.getRowModel().rows.map(row => (
+            <tr
+              key={row.id}
+              className={
+                openMenuIndex !== null
+                  ? row.index === openMenuIndex
+                    ? 'active-row'
+                    : 'no-hover'
+                  : ''
+              }
+            >
+            {row.getVisibleCells().map(cell => (
+              <td key={cell.id}>
+                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              </td>
+            ))}
+          </tr>
+        ))}
+
+        {/* Add empty rows to pad remaining space */}
+        {Array.from({
+          length: table.getState().pagination.pageSize - table.getRowModel().rows.length,
+        }).map((_, i) => (
+          <tr key={`empty-${i}`} className="placeholder-row">
+            {table.getAllLeafColumns().map((col, colIndex) => (
+              <td key={`empty-cell-${i}-${colIndex}`}>&nbsp;</td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
 
       <div className="table-footer">
         <div className="pagination">
