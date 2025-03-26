@@ -45,7 +45,7 @@ export default function Inventory({ business }) {
   useEffect(() => {
     const calculatePageSize = () => {
       const rowHeight = 50 // approx row height in px (adjust if needed)
-      const availableHeight = window.innerHeight - 380
+      const availableHeight = window.innerHeight - 360
       const calculated = Math.floor(availableHeight / rowHeight)
       setPageSize(calculated)
     }
