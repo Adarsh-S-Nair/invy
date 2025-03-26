@@ -217,3 +217,35 @@
 .search-input:focus {
   box-shadow: none !important;
 }
+
+th.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s ease;
+}
+
+th.sortable:hover {
+  color: var(--color-text-hover);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px; 
+}
+
+.header-label {
+  display: inline-block;
+}
+
+th {
+  text-align: center; /* default center alignment */
+}
+
+.header-content.centered {
+  display: inline-flex; /* instead of flex to keep it inline */
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}

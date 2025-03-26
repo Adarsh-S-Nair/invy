@@ -2,18 +2,20 @@ import {
   useReactTable,
   getCoreRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
   flexRender,
 } from '@tanstack/react-table'
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
+import { FiChevronUp, FiChevronDown } from 'react-icons/fi'
 import './Table.css'
 
 export default function Table({ columns, data, openMenuIndex, pageSize = 15 }) {
   const table = useReactTable({
     data,
     columns,
-    pageCount: Math.ceil(data.length / pageSize),
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(), // ✅ Add this
     initialState: {
       pagination: {
         pageIndex: 0,
@@ -29,8 +31,19 @@ export default function Table({ columns, data, openMenuIndex, pageSize = 15 }) {
           {table.getHeaderGroups().map(headerGroup => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map(header => (
-                <th key={header.id}>
-                  {flexRender(header.column.columnDef.header, header.getContext())}
+                <th
+                  key={header.id}
+                  onClick={header.column.getToggleSortingHandler()}
+                  className={header.column.getCanSort() ? 'sortable' : ''}
+                >
+                  <div className="header-content centered">
+                    <span className="header-label">
+                      {flexRender(header.column.columnDef.header, header.getContext())}
+                    </span>
+                
+                    {header.column.getIsSorted() === 'asc' && <FiChevronUp size={14} />}
+                    {header.column.getIsSorted() === 'desc' && <FiChevronDown size={14} />}
+                  </div>
                 </th>
               ))}
             </tr>
