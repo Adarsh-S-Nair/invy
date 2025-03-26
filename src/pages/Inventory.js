@@ -1,34 +1,41 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../supabaseClient'
+import { formatCurrency } from '../utils/utils'
 import './Inventory.css'
 import emptyBox from '../assets/empty-box.svg'
 import Table from '../components/Table'
 import Modal from '../components/Modal'
 import ContextMenu from '../components/ContextMenu'
-import { FiMoreVertical, FiEdit2, FiTrash2, FiPlus, FiSearch } from 'react-icons/fi'
+import { FiMoreVertical, FiEdit2, FiTrash2, FiSearch } from 'react-icons/fi'
+import { FaPlus, FaSearch } from "react-icons/fa"
+import { MdEdit, MdDelete, MdMoreVert } from "react-icons/md";
+
 
 
 export default function Inventory({ business }) {
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
+  
   const [openMenuIndex, setOpenMenuIndex] = useState(null)
   const [showAddModal, setShowAddModal] = useState(false)
   const [editModalOpen, setEditModalOpen] = useState(false)
   const [itemToEdit, setItemToEdit] = useState(null)
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false)
+  const [itemToDelete, setItemToDelete] = useState(null)
+
 
   const fetchItems = async () => {
     setLoading(true)
-    const { data, error } = await supabase.from('items').select('*').eq('business_id', business.id)
+    const { data, error } = await supabase.from('items')
+                                          .select('*')
+                                          .eq('business_id', business.id)
+                                          .order('created_at', { ascending: true })
 
     if (error) {
       console.error('Error fetching items:', error)
     } else {
       setItems(data)
     }
-    console.log(`business_id: ${business.id}`)
-    console.log("Fetched items!")
-    console.log(data)
-
     setLoading(false)
   }
 
@@ -60,8 +67,6 @@ export default function Inventory({ business }) {
       console.error('Failed to insert item:', error)
       return
     }
-  
-    console.log('✅ Item added!')
     setShowAddModal(false)
     fetchItems()
   }
@@ -77,41 +82,46 @@ export default function Inventory({ business }) {
       return
     }
   
-    const updatedFields = {
+    const { error } = await supabase.from('items').update({
       name: updatedData.name,
       category: updatedData.category,
       quantity: parseInt(updatedData.quantity) || 0,
       purchase_price: parseFloat(updatedData.purchase_price) || 0,
       sell_price: parseFloat(updatedData.sell_price) || 0,
       low_stock_threshold: parseInt(updatedData.low_stock_threshold) || 0,
-    }
-  
-    const { error } = await supabase
-      .from('items')
-      .update(updatedFields)
-      .eq('id', itemToEdit.id)
+    }).eq('id', itemToEdit.id)
   
     if (error) {
       console.error('Error updating item:', error)
       return
     }
-  
-    console.log("✅ Item updated")
     setEditModalOpen(false)
     setItemToEdit(null)
     fetchItems()
   }
 
-  const handleDelete = (row) => {
-    console.log('Delete', row)
+  const handleDeleteItem = async () => {
+    if (!itemToDelete) return
+  
+    const { error } = await supabase.from('items').delete().eq('id', itemToDelete.id)
+  
+    if (error) {
+      console.error('Failed to delete item:', error)
+      return
+    }
+  
+    setDeleteModalOpen(false)
+    setItemToDelete(null)
+    fetchItems()
   }
+  
 
   const columns = [
     { header: 'Name', accessorKey: 'name' },
     { header: 'Category', accessorKey: 'category' },
     { header: 'Quantity', accessorKey: 'quantity' },
-    { header: 'Purchase Price', accessorKey: 'purchase_price' },
-    { header: 'Sell Price', accessorKey: 'sell_price' },
+    { header: 'Purchase Price', accessorKey: 'purchase_price', cell: info => formatCurrency(info.getValue()) },
+    { header: 'Sell Price', accessorKey: 'sell_price', cell: info => formatCurrency(info.getValue()) },
     {
       header: 'Status',
       id: 'status', // use `id` instead of `accessorKey` since we're not pulling directly from data
@@ -138,7 +148,7 @@ export default function Inventory({ business }) {
               className="action-icon-btn"
               onClick={() => setOpenMenuIndex(openMenuIndex === rowIndex ? null : rowIndex)}
             >
-              <FiMoreVertical size={20} />
+              <MdMoreVert size={20} />
             </button>
     
             {openMenuIndex === rowIndex && (
@@ -147,7 +157,7 @@ export default function Inventory({ business }) {
                   items={[
                     {
                       label: 'Edit',
-                      icon: <FiEdit2 size={16} />,
+                      icon: <MdEdit size={16} />,
                       onClick: () => {
                         openEditModal(row)
                         setOpenMenuIndex(null)
@@ -155,9 +165,10 @@ export default function Inventory({ business }) {
                     },
                     {
                       label: 'Delete',
-                      icon: <FiTrash2 size={16} />,
+                      icon: <MdDelete size={16} />,
                       onClick: () => {
-                        handleDelete(row)
+                        setItemToDelete(row)
+                        setDeleteModalOpen(true)
                         setOpenMenuIndex(null)
                       },
                       danger: true,
@@ -192,7 +203,7 @@ export default function Inventory({ business }) {
               <>
                 <div className="table-header-row">
                   <div className="search-bar">
-                    <FiSearch size={16} className="search-icon" />
+                    <FaSearch size={16} className="search-icon" />
                     <input
                       type="text"
                       placeholder="Search inventory..."
@@ -201,7 +212,7 @@ export default function Inventory({ business }) {
                   </div>
 
                   <button className="btn btn-primary new-item-btn" onClick={() => setShowAddModal(true)}>
-                    <FiPlus style={{ marginRight: '6px' }} />
+                    <FaPlus />
                     New Item
                   </button>
                 </div>
@@ -224,14 +235,15 @@ export default function Inventory({ business }) {
           isOpen={showAddModal}
           onClose={() => setShowAddModal(false)}
           actionLabel="Add"
+          loadingLabel="Adding..."
           onSubmit={handleAddItem}
           fields={[
             { name: 'name', label: 'Item Name', required: true, fullWidth: true },
             { name: 'category', label: 'Category', required: true, fullWidth: true },
-            { name: 'quantity', label: 'Quantity', type: 'number', min: 0, step: 1 },
-            { name: 'low_stock_threshold', label: 'Low Stock Threshold', type: 'number', min: 0, step: 1 },
-            { name: 'purchase_price', label: 'Purchase Price', type: 'number', min: 0, step: 0.01, currency: true },
-            { name: 'sell_price', label: 'Sell Price', type: 'number', min: 0, step: 0.01, currency: true }
+            { name: 'quantity', label: 'Quantity', type: 'number', min: 0, step: 1, defaultValue: 0 },
+            { name: 'low_stock_threshold', label: 'Low Stock Threshold', type: 'number', min: 0, step: 1, defaultValue: 0 },
+            { name: 'purchase_price', label: 'Purchase Price', type: 'number', min: 0, step: 0.01, currency: true, defaultValue: 0 },
+            { name: 'sell_price', label: 'Sell Price', type: 'number', min: 0, step: 0.01, currency: true, defaultValue: 0 }
           ]}
         />      
       )}
@@ -245,6 +257,7 @@ export default function Inventory({ business }) {
             setItemToEdit(null)
           }}
           actionLabel="Save"
+          loadingLabel="Saving..."
           onSubmit={(updatedData) => handleEditItem(updatedData)}
           fields={[
             { name: 'name', label: 'Item Name', required: true, fullWidth: true, defaultValue: itemToEdit.name },
@@ -255,6 +268,25 @@ export default function Inventory({ business }) {
             { name: 'sell_price', label: 'Sell Price', type: 'number', min: 0, step: 0.01, currency: true, defaultValue: itemToEdit.sell_price }
           ]}
         />
+      )}
+
+      {itemToDelete && (
+        <Modal
+          title="Delete Item"
+          isOpen={deleteModalOpen}
+          onClose={() => {
+            setDeleteModalOpen(false)
+            setItemToDelete(null)
+          }}
+          actionLabel="Delete"
+          loadingLabel="Deleting..."
+          actionType="danger"
+          onSubmit={handleDeleteItem}
+        >
+          <p style={{ fontSize: '0.9rem', color: 'var(--color-text)' }}>
+            Are you sure you want to delete <strong>{itemToDelete?.name}</strong>? This action cannot be undone.
+          </p>
+        </Modal>
       )}
     </div>
   )

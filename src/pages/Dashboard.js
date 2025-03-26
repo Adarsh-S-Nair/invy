@@ -55,6 +55,7 @@ export default function Dashboard({ business, fetchBusiness, loading }) {
           isOpen={showModal}
           onClose={() => setShowModal(false)}
           actionLabel="Create"
+          loadingLabel="Creating..."
           onSubmit={handleCreateBusiness}
           fields={[
             {

@@ -28,10 +28,17 @@
 .modal-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 12px;
-  margin-top: 25px;   /* 👈 add space above the buttons */
-  padding-bottom: 8px; /* 👈 add space at the bottom */
+  gap: 10px;
 }
+
+.modal-actions.form-mode {
+  margin-top: 25px;
+}
+
+.modal-actions.non-form-mode {
+  margin-top: 5px;
+}
+
 
 .modal-header h2 {
   font-size: 1.15rem;
@@ -132,16 +139,33 @@
   align-items: center;
 }
 
+.input-wrapper input {
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  color: var(--color-text);
+}
+
 .input-wrapper.currency input {
   padding-left: 22px; /* extra space for the $ */
 }
 
 .currency-symbol {
   position: absolute;
-  left: 8px;
-  top: 46%;
+  left: 9px;
+  top: 48.0%;
   transform: translateY(-50%);
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   color: var(--color-muted-text);
   pointer-events: none;
+}
+
+.btn-danger {
+  background-color: var(--color-error);
+  color: white;
+  border: none;
+}
+
+.btn-danger:hover {
+  background-color: var(--color-error-hover);
 }

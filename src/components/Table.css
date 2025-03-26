@@ -160,10 +160,10 @@
   gap: 8px;
   font-weight: 600;
   padding: 10px 16px;
-  font-size: 0.875rem;
+  font-size: 0.8rem !important;
   border-radius: 8px;
   background-color: var(--color-primary);
-  color: white;
+  color: var(--color-text);
   border: none;
   cursor: pointer;
   transition: background 0.2s ease;
@@ -185,7 +185,7 @@
   align-items: center;
   background-color: var(--color-card);
   border: 1px solid var(--color-border);
-  padding: 6px 12px;
+  padding: 1px 12px;
   border-radius: 8px;
   max-width: 300px;
   width: 100%;

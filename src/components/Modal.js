@@ -8,6 +8,8 @@ export default function Modal({
   children,
   fields = [],
   actionLabel = 'Submit',
+  actionType,
+  loadingLabel = '',
   onSubmit = null,
 }) {
 
@@ -25,35 +27,34 @@ export default function Modal({
     )
   )
   const [error, setError] = useState(null)
+  const [loading, setLoading] = useState(false)
 
   if (!isOpen) return null
-
-  const formatCurrency = (val) => {
-    if (val === '' || val === null || isNaN(val)) return ''
-    const num = parseFloat(val)
-    return `$${num.toFixed(2)}`
-  }
-  
-  const parseCurrency = (val) => {
-    const cleaned = val.replace(/[^0-9.]/g, '')
-    return parseFloat(cleaned) || 0
-  }  
   
   const handleChange = (name, value) => {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const missingRequired = fields.filter(
       (f) => f.required && !formData[f.name]?.toString().trim()
     )
-
+  
     if (missingRequired.length > 0) {
       setError('Please fill in all required fields.')
       return
     }
-
-    if (onSubmit) onSubmit(formData)
+  
+    if (onSubmit) {
+      try {
+        setLoading(true)
+        await onSubmit(formData) // support async
+      } catch (err) {
+        console.error('Submit failed:', err)
+      } finally {
+        setLoading(false)
+      }
+    }
   }
 
   return (
@@ -108,14 +109,18 @@ export default function Modal({
           )}
         </div>
 
-        <div className="modal-actions">
+        <div className={`modal-actions ${isFormMode ? 'form-mode' : 'non-form-mode'}`}>
           <button className="btn btn-muted" onClick={onClose}>
             Cancel
           </button>
 
-          {isFormMode && (
-            <button className="btn btn-primary" onClick={handleSubmit}>
-              {actionLabel}
+          {onSubmit && (
+            <button
+              className={`btn ${actionType === 'danger' ? 'btn-danger' : 'btn-primary'}`}
+              onClick={handleSubmit}
+              disabled={loading}
+            >
+              {loading ? loadingLabel : actionLabel}
             </button>
           )}
         </div>
