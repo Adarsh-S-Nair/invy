@@ -25,6 +25,14 @@
   animation: slideDown 0.25s ease;
 }
 
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 25px;   /* 👈 add space above the buttons */
+  padding-bottom: 8px; /* 👈 add space at the bottom */
+}
+
 .modal-header h2 {
   font-size: 1.15rem;
   font-weight: 600;
@@ -61,4 +69,79 @@
     transform: translateY(0);
     opacity: 1;
   }
+}
+
+.form-row {
+  display: flex;
+  gap: 12px;
+}
+
+.form-row input {
+  flex: 1;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.input-group label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-muted-text); /* Add this to globals if needed */
+  margin-bottom: 4px;
+}
+
+.form-modal-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 48%;
+}
+
+.form-field.full {
+  flex: 1 1 100%;
+}
+
+.form-field.half {
+  flex-basis: calc(50% - 8px); /* 👈 half of row minus half the gap */
+}
+
+.form-field label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-muted-text);
+  margin-bottom: 8px;
+  text-align: left; /* ✅ ADD THIS */
+}
+
+.required-asterisk {
+  color: var(--color-error);
+  margin-left: 4px;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper.currency input {
+  padding-left: 22px; /* extra space for the $ */
+}
+
+.currency-symbol {
+  position: absolute;
+  left: 8px;
+  top: 46%;
+  transform: translateY(-50%);
+  font-size: 0.875rem;
+  color: var(--color-muted-text);
+  pointer-events: none;
 }

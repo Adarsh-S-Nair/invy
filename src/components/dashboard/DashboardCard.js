@@ -80,19 +80,3 @@ export default function DashboardCard({
       </div>
     )
   }
-  
-  // Utility to convert data points into SVG polyline points
-  function generateSvgPoints(data) {
-    const max = Math.max(...data)
-    const min = Math.min(...data)
-    const range = max - min || 1
-  
-    return data
-      .map((val, idx) => {
-        const x = (idx / (data.length - 1)) * 100
-        const y = 30 - ((val - min) / range) * 30 // invert y
-        return `${x.toFixed(2)},${y.toFixed(2)}`
-      })
-      .join(' ')
-  }
-  

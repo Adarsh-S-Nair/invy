@@ -7,7 +7,7 @@ import { TbLayoutDashboardFilled } from "react-icons/tb"
 import { MdBusinessCenter, MdInventory, MdSettings, MdLogout } from "react-icons/md"
 import './Sidebar.css'
 
-export default function Sidebar() {
+export default function Sidebar({ business }) {
   const [isOpen, setIsOpen] = useState(false)
   const sidebarRef = useRef(null)
   const navigate = useNavigate()
@@ -16,9 +16,13 @@ export default function Sidebar() {
   const navItems = [
     { icon: <TbLayoutDashboardFilled size={20} />, label: 'Dashboard', path: '/dashboard' },
     { icon: <MdBusinessCenter size={20} />, label: 'Business', path: '/business' },
-    { icon: <MdInventory size={20} />, label: 'Inventory', path: '/inventory' },
+    business && {
+      icon: <MdInventory size={20} />,
+      label: 'Inventory',
+      path: '/inventory',
+    },
     { icon: <MdSettings size={20} />, label: 'Settings', path: '/settings' },
-  ]
+  ].filter(Boolean)
 
   const handleLogout = async () => {
     await supabase.auth.signOut()

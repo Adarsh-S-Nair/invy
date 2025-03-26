@@ -25,3 +25,30 @@
     background-color: var(--color-muted-hover);
   }
   
+  .context-menu-item {
+    padding: 10px 16px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.2s ease;
+  }
+  
+  .context-menu-item.danger {
+    color: var(--color-error);
+  }
+  
+  .context-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .context-label {
+    flex: 1;
+    text-align: left;
+  }
+  

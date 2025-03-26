@@ -38,7 +38,7 @@
 }
 
 .empty-state {
-  flex: 1;
+  height: 851px; /* 👈 matches full-table height */
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -2,48 +2,40 @@ import { useEffect, useState } from 'react'
 import { supabase } from '../supabaseClient'
 import Modal from '../components/Modal'
 import DashboardCard from '../components/dashboard/DashboardCard'
-import CreateBusinessForm from '../components/CreateBusinessForm'
 import './Dashboard.css'
-import { FaDollarSign, FaMoneyBillWave, FaChartLine, FaReceipt } from 'react-icons/fa'
 
-export default function Dashboard() {
+export default function Dashboard({ business, fetchBusiness, loading }) {
   const [showModal, setShowModal] = useState(false)
-  const [business, setBusiness] = useState(null)
-  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const fetchBusiness = async () => {
-      setLoading(true)
-
-      const {
-        data: { user },
-        error: userError,
-      } = await supabase.auth.getUser()
-
-      if (userError || !user) return
-
-      const { data, error } = await supabase.from('businesses').select('*').eq('owner_id', user.id).maybeSingle()
-
-      if (!error && data) {
-        console.log('Business:', data)
-        setBusiness(data)
-      }
-
-      setLoading(false)
-    }
-
     fetchBusiness()
   }, [])
 
-  const handleCreateBusiness = (name) => {
-    // Re-fetch businesses after creating
+  const handleCreateBusiness = async ({ name }) => {
+    if (!name.trim()) return
+  
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser()
+  
+    if (userError || !user) {
+      console.error('Failed to get user:', userError)
+      return
+    }
+  
+    const { error: insertError } = await supabase
+      .from('businesses')
+      .insert({ name, owner_id: user.id })
+  
+    if (insertError) {
+      console.error('Failed to create business:', insertError)
+      return
+    }
+  
     setShowModal(false)
-    setLoading(true)
-    setTimeout(() => {
-      // Small delay to ensure Supabase insert has propagated
-      window.location.reload()
-    }, 500)
-  }
+    fetchBusiness() // ✅ Refresh business state
+  }  
 
   if (loading) {
     return <div className="dashboard-loading">Loading...</div>
@@ -62,12 +54,17 @@ export default function Dashboard() {
           title="Create a New Business"
           isOpen={showModal}
           onClose={() => setShowModal(false)}
-        >
-          <CreateBusinessForm
-            onCreate={handleCreateBusiness}
-            onCancel={() => setShowModal(false)}
-          />
-        </Modal>
+          actionLabel="Create"
+          onSubmit={handleCreateBusiness}
+          fields={[
+            {
+              name: 'name',
+              label: 'Business Name',
+              required: true,
+              fullWidth: true,
+            },
+          ]}
+        />
       </div>
     )
   }
