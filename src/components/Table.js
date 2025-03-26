@@ -3,6 +3,7 @@ import {
   getCoreRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  getFilteredRowModel, 
   flexRender,
 } from '@tanstack/react-table'
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
@@ -15,7 +16,7 @@ export default function Table({ columns, data, openMenuIndex, pageSize = 15 }) {
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(), // ✅ Add this
+    getSortedRowModel: getSortedRowModel(), 
     initialState: {
       pagination: {
         pageIndex: 0,

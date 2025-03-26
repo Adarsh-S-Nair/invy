@@ -23,6 +23,9 @@ export default function Inventory({ business }) {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
   const [itemToDelete, setItemToDelete] = useState(null)
 
+  const [searchQuery, setSearchQuery] = useState('')
+  const [pageSize, setPageSize] = useState(15) // default
+
 
   const fetchItems = async () => {
     setLoading(true)
@@ -38,6 +41,20 @@ export default function Inventory({ business }) {
     }
     setLoading(false)
   }
+
+  useEffect(() => {
+    const calculatePageSize = () => {
+      const rowHeight = 50 // approx row height in px (adjust if needed)
+      const availableHeight = window.innerHeight - 380
+      const calculated = Math.floor(availableHeight / rowHeight)
+      setPageSize(calculated)
+    }
+  
+    calculatePageSize()
+  
+    window.addEventListener('resize', calculatePageSize)
+    return () => window.removeEventListener('resize', calculatePageSize)
+  }, [])
 
   useEffect(() => {
     if (!business?.id) return
@@ -184,6 +201,18 @@ export default function Inventory({ business }) {
     }
   ]
 
+  const filteredItems = items.filter((item) => {
+    const query = searchQuery.toLowerCase()
+  
+    return (
+      item.name.toLowerCase().includes(query) ||
+      item.category.toLowerCase().includes(query) ||
+      item.quantity.toString().includes(query) ||
+      item.sell_price.toString().includes(query) ||
+      item.purchase_price.toString().includes(query)
+    )
+  })
+
   return (
     <div className="inventory-page">
       <div className="page-header">Inventory</div>
@@ -208,6 +237,8 @@ export default function Inventory({ business }) {
                       type="text"
                       placeholder="Search inventory..."
                       className="search-input"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
                     />
                   </div>
 
@@ -218,9 +249,9 @@ export default function Inventory({ business }) {
                 </div>
 
                 <Table
-                  data={items}
+                  data={filteredItems}
                   columns={columns}
-                  pageSize={15}
+                  pageSize={pageSize}
                   openMenuIndex={openMenuIndex}
                 />
               </>
